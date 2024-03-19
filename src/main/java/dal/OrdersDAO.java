@@ -26,11 +26,13 @@ public class OrdersDAO {
 			st.setInt(5, u.getId());
 			st.executeUpdate();
 			String sql1 = "select top 1 id from [order] order by id desc";
+			//lấy cái vừa thêm vào, vừa thêm nên id lớn nhất
 			PreparedStatement st1 = connection.prepareStatement(sql1);
 			ResultSet rs = st1.executeQuery();
 			if(rs.next()) {
 				int oid = rs.getInt(1);
 				for(Items i : cart.getItems()) {
+					// thêm các món trong giỏ hàng vào đơn
 					String sql2 = "insert into [orderDetail] values (?, ?, ?, ?)";
 					PreparedStatement st2 = connection.prepareStatement(sql2);
 					st2.setInt(1, oid);

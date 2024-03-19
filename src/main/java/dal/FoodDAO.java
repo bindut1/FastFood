@@ -10,6 +10,7 @@ import java.util.List;
 import connection.MySQLConnection;
 import model.Food;
 
+
 public class FoodDAO {
 	public List<Food> getAll(){
 		List<Food> list = new ArrayList<>();
@@ -46,5 +47,59 @@ public class FoodDAO {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	public List<Food> getByCatID(int id){
+		List<Food> list = new ArrayList<>();
+		String sql = "select f.id, f.title, f.price, f.description, f.cid "
+				+ " c.cate_name from food f join category c "
+				+"on f.cate_id = c.id where c.id = ?";;
+		Connection connection = MySQLConnection.getConnection();
+		try {
+			PreparedStatement st = connection.prepareStatement(sql);
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();
+			while(rs.next()) {
+				Food f = new Food(
+						rs.getInt("id"), 
+						rs.getString("title"),
+						rs.getString("description"), 
+						rs.getInt("price"), 
+						rs.getInt("cateId"));
+				list.add(f);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public Food getFoodById(int id) {
+		String sql = "select * from food where id = ?";
+		Connection connection = MySQLConnection.getConnection();
+		try {
+			PreparedStatement st = connection.prepareStatement(sql);
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();
+			if(rs.next()) {
+				return  new Food(
+						rs.getInt("id"), 
+						rs.getString("title"),
+						rs.getString("description"), 
+						rs.getInt("price"), 
+						rs.getInt("cateId"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<Food> getListByPage(List<Food> list, int start, int end){
+		ArrayList<Food> arr = new ArrayList<>();
+		for(int i = start; i < end; i++) {
+			arr.add(list.get(i));
+		}
+		return arr;
 	}
 }
