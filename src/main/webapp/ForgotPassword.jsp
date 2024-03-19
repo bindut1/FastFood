@@ -32,21 +32,25 @@
 <title>Forgot Password Form</title>
 </head>
 <body>
-<jsp:include page="Menu.jsp"></jsp:include>
-<div id="logreg-forms">
-            <form class="form-signin" action="forgotPassword" method="post">
-                <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Forgot Password</h1>
-                <p class="text-success">${mess}</p>
-                <p class="text-danger">${error}</p>
-                <label for="username">Username</label>
-                <input name="username" type="text" id="username" class="form-control" placeholder="Username" required="" autofocus="">
-                <label for="email">Email</label>
-                <input name="email" type="text" id="email" class="form-control" placeholder="Email" required="" autofocus="">
-                <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Retrieve</button> 
-            </form>
-             
-</div>
-	
+	<jsp:include page="Menu.jsp"></jsp:include>
+	<div id="logreg-forms">
+		<form class="form-signin" action="forgotPassword" method="post">
+			<h1 class="h3 mb-3 font-weight-normal" style="text-align: center">
+				Forgot Password</h1>
+			<p class="text-success">${mess}</p>
+			<p class="text-danger">${error}</p>
+			<label for="username">Username</label> <input name="username"
+				type="text" id="username" class="form-control"
+				placeholder="Username" required="" autofocus=""> <label
+				for="email">Email</label> <input name="email" type="text" id="email"
+				class="form-control" placeholder="Email" required="" autofocus="">
+			<button class="btn btn-success btn-block" type="submit">
+				<i class="fas fa-sign-in-alt"></i> Retrieve
+			</button>
+		</form>
+
+	</div>
+
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
