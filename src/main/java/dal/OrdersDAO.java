@@ -5,10 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.*;
 
 import connection.MySQLConnection;
 import model.Cart;
 import model.Items;
+import model.Orders;
 import model.Users;
 
 public class OrdersDAO {
@@ -46,4 +48,27 @@ public class OrdersDAO {
 			e.printStackTrace();
 		}
 	}
+	public List<Orders> getOrderByStatus(String status) {
+		List<Orders> list = new ArrayList<>();
+		String sql = "select * from orders where order_status = ? ";
+		Connection connection = MySQLConnection.getConnection();
+		try {
+			PreparedStatement st = connection.prepareStatement(sql);
+			st.setString(1, status);
+			ResultSet rs = st.executeQuery();
+			while(rs.next()) {
+				Orders o = new Orders(rs.getInt("id"), 
+									rs.getString("created_date"), 
+									rs.getInt("total_money"),
+									rs.getString("order_status"),
+									rs.getString("note"),
+									rs.getInt("user_id"));
+				list.add(o);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 }

@@ -20,7 +20,7 @@ public class FoodDAO {
 			PreparedStatement st = connection.prepareStatement(sql);
 			ResultSet rs = st.executeQuery();
 			while(rs.next()) {
-				Food f = new Food(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getInt("price"), rs.getInt("cateId"));
+				Food f = new Food(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getInt("price"), rs.getInt("cate_id"));
 				list.add(f);
 			}
 		} catch (SQLException e) {
@@ -40,7 +40,7 @@ public class FoodDAO {
 			st.setString(1, "%" + key + "%");
 			ResultSet rs = st.executeQuery();
 			while(rs.next()) {
-				Food f = new Food(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getInt("price"), rs.getInt("cateId"));
+				Food f = new Food(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getInt("price"), rs.getInt("cate_id"));
 				list.add(f);
 			}
 		} catch (SQLException e) {
@@ -65,7 +65,7 @@ public class FoodDAO {
 						rs.getString("title"),
 						rs.getString("description"), 
 						rs.getInt("price"), 
-						rs.getInt("cateId"));
+						rs.getInt("cate_id"));
 				list.add(f);
 			}
 		} catch (SQLException e) {
@@ -87,7 +87,7 @@ public class FoodDAO {
 						rs.getString("title"),
 						rs.getString("description"), 
 						rs.getInt("price"), 
-						rs.getInt("cateId"));
+						rs.getInt("cate_id"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -101,5 +101,37 @@ public class FoodDAO {
 			arr.add(list.get(i));
 		}
 		return arr;
+	}
+	
+	public int deleteFoodById(int id) {
+		Connection connection = MySQLConnection.getConnection();
+		String sql = "delete from food f where f.id = ?";
+		int isDelete = 0;
+		try {
+			PreparedStatement st = connection.prepareStatement(sql);
+			st.setInt(1, id);
+			
+			isDelete = st.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return isDelete;
+	}
+	
+	public int insertFood(String title, String desc, int price, int cateId) {
+		Connection connection = MySQLConnection.getConnection();
+		String sql = "insert into food(title, description, price, cate_id) values (?, ?, ?, ?)";
+		int isSuccess = 0 ;
+		try {
+			PreparedStatement st = connection.prepareStatement(sql);
+			st.setString(1, title);
+			st.setString(2, desc);
+			st.setInt(3, price);
+			st.setInt(4, cateId);
+			isSuccess = st.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return isSuccess;
 	}
 }

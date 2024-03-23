@@ -15,8 +15,20 @@ import model.Food;
 import model.Items;
 
 import java.util.*;
-@WebServlet(urlPatterns = "/Cart")
-public class CartServlet extends HttpServlet{
+@WebServlet(urlPatterns = "/buy")
+public class AddCartServlet extends HttpServlet{
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		HttpSession session = req.getSession(true);
+		FoodDAO fdb = new FoodDAO();
+		List<Food> list1 = fdb.getAll() ;
+		session.setAttribute("list1", list1);
+		req.getRequestDispatcher("MyEShop.jsp").forward(req,resp);
+		
+	}
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
@@ -44,6 +56,6 @@ public class CartServlet extends HttpServlet{
 		List<Items> list = cart.getItems();
 		session.setAttribute("cart", cart);
 		session.setAttribute("size", list.size());
-		req.getRequestDispatcher("Cart.jsp").forward(req, resp);
+		req.getRequestDispatcher("MyEShop.jsp").forward(req, resp);
 	}
 }

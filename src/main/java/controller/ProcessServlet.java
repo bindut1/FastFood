@@ -48,6 +48,6 @@ public class ProcessServlet extends HttpServlet{
 		List<Items> list = cart.getItems();
 		session.setAttribute("cart", cart);
 		session.setAttribute("size", list.size());
-		req.getRequestDispatcher("MyCart.jsp").forward(req, resp);
+		req.getRequestDispatcher("Cart.jsp").forward(req, resp);
 	}
 }

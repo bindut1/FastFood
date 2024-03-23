@@ -19,6 +19,7 @@ public class ListFoodServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		FoodDAO fd = new FoodDAO();
 		List<Food> list1 = fd.getAll();
+		
 		int page, numperpage = 6;
 		int size = list1.size();
 		int num = (size % 6 == 0 ? (size/6) : ((size/6) + 1));
@@ -36,6 +37,6 @@ public class ListFoodServlet extends HttpServlet{
 		req.setAttribute("page", page);
 		req.setAttribute("num", num);
 		
-		req.getRequestDispatcher("list.jsp").forward(req, resp);
+		req.getRequestDispatcher("index.jsp").forward(req, resp);
 	}
 }
